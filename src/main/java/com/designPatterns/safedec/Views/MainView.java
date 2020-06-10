@@ -40,7 +40,7 @@ public class MainView extends javax.swing.JFrame {
         dashboardMenuPanel = new javax.swing.JPanel();
         javax.swing.JLabel dashboardMenuLabel = new javax.swing.JLabel();
         productMenuPanel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        controlPanelMenuLabel = new javax.swing.JLabel();
         profileMenuPanel = new javax.swing.JPanel();
         profileMenuLabel = new javax.swing.JLabel();
         billingMenuPanel = new javax.swing.JPanel();
@@ -92,9 +92,14 @@ public class MainView extends javax.swing.JFrame {
         productMenuPanel.setBackground(new java.awt.Color(0, 128, 145));
         productMenuPanel.setPreferredSize(new java.awt.Dimension(300, 40));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("CONTROL PANEL");
+        controlPanelMenuLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        controlPanelMenuLabel.setForeground(new java.awt.Color(255, 255, 255));
+        controlPanelMenuLabel.setText("CONTROL PANEL");
+        controlPanelMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                controlPanelMenuLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout productMenuPanelLayout = new javax.swing.GroupLayout(productMenuPanel);
         productMenuPanel.setLayout(productMenuPanelLayout);
@@ -102,11 +107,11 @@ public class MainView extends javax.swing.JFrame {
             productMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, productMenuPanelLayout.createSequentialGroup()
                 .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(controlPanelMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         productMenuPanelLayout.setVerticalGroup(
             productMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(controlPanelMenuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         jPanel5.add(productMenuPanel);
@@ -220,7 +225,7 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(67, 104, 145));
@@ -302,6 +307,15 @@ public class MainView extends javax.swing.JFrame {
         jPanel3.repaint();
     }//GEN-LAST:event_dashboardMenuLabelMouseClicked
 
+    private void controlPanelMenuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlPanelMenuLabelMouseClicked
+        // TODO add your handling code here:
+        JPanel controlPanel = new MapPanel();
+        jPanel3.removeAll();
+        jPanel3.add(controlPanel);
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }//GEN-LAST:event_controlPanelMenuLabelMouseClicked
+
 
 
     /**
@@ -343,9 +357,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel accountsMenuPanel;
     private javax.swing.JLabel billingMenuLabel;
     private javax.swing.JPanel billingMenuPanel;
+    private javax.swing.JLabel controlPanelMenuLabel;
     private javax.swing.JPanel dashboardMenuPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

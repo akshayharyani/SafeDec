@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import com.designPatterns.safedec.connectionpooling.ObjectPool;
 import com.designPatterns.safedec.controls.ViewController;
 import com.designPatterns.safedec.models.Customer;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
 
@@ -33,14 +34,16 @@ private static final String IPADDRESS       = "ipAddress";
 private static final String PORT            = "port";
 private static final String COST            = "cost";
 private static final String ISCAMERAENABLED = "iscameraEnabled";
-   
-private static final String INSERT_SENSORS = "INSERT INTO `customer_sensor_relation` "
+private static final String TYPE = "sensorType";
+
+private static final String ISNERT_MOTION_SENSOR = "INSERT INTO `customer_sensor_relation` "
         + "(`sectionId`,"
         + " `x1`,`y1`,"
         + " `customerId`, `sensorId`,"
         + " `ipAddress`,"
         + " `port`,"
         + " `cost`,"
+        + " `type`,"
         + " `isCameraEnabled`)"
         + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
@@ -59,7 +62,7 @@ private static final String GET_SENSORS_BY_CUSTOMER_ID = "select * from customer
 private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_sensor_relation where customerID = ? and sectionid = ?";
 
     @Override
-    public boolean create(Customer customer, MotionSensor sensor) {
+    public boolean createMotionSensor(Customer customer, MotionSensor sensor) {
        ObjectPool pool =  ViewController.getInstance().getConnectionPool();
        Connection conn = (Connection)pool.getObject();
        ResultSet rs = null;
@@ -67,7 +70,7 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
        boolean flag = false;
        try
         {
-            stmt = conn.prepareStatement(INSERT_SENSORS);
+            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR);
             stmt.setInt(1, sensor.getSectionId());
             stmt.setInt(2, sensor.getLoc().getX1());
             stmt.setInt(3, sensor.getLoc().getY1());
@@ -76,7 +79,8 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
             stmt.setString(8, sensor.getIpAddress());
             stmt.setInt(7, sensor.getPortNumber());
             stmt.setInt(8, sensor.getPrice());
-            stmt.setBoolean(9, sensor.isIsCamera());
+            stmt.setString(9, "Motion");
+            stmt.setBoolean(10, sensor.isIsCamera());
             stmt.executeUpdate();
             flag = true;
         }
@@ -97,6 +101,45 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
     return flag;
     }
 
+    @Override
+    public boolean createFireSensor(Customer customer, FireSensor sensor) {
+       ObjectPool pool =  ViewController.getInstance().getConnectionPool();
+       Connection conn = (Connection)pool.getObject();
+       ResultSet rs = null;
+       PreparedStatement  stmt = null;
+       boolean flag = false;
+       try
+        {
+            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR);
+            stmt.setInt(1, sensor.getSectionId());
+            stmt.setInt(2, sensor.getLoc().getX1());
+            stmt.setInt(3, sensor.getLoc().getY1());
+            stmt.setInt(4, customer.getCustomerId());
+            stmt.setInt(5, sensor.getId());
+            stmt.setString(8, sensor.getIpAddress());
+            stmt.setInt(7, sensor.getPortNumber());
+            stmt.setInt(8, sensor.getPrice());
+            stmt.setString(9, "Fire");
+            stmt.setBoolean(10, false);
+            stmt.executeUpdate();
+            flag = true;
+        }
+        catch( SQLException e)
+        {
+           Logger.getLogger(CustomerDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+        }
+        finally
+        {
+           try {
+               stmt.close();
+               pool.releaseObject(conn);
+           } catch (SQLException ex) {
+               Logger.getLogger(CustomerDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+               flag = false;
+           }
+        }
+    return flag;
+    }
     @Override
     public boolean destroy(MotionSensor sensors) {
         boolean flag = false;
@@ -138,7 +181,43 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
         
     }
     @Override
-    public boolean edit( Customer customer, MotionSensor sensor) {
+    public boolean editMotionSensor( Customer customer, MotionSensor sensor) {
+       ObjectPool pool =  ViewController.getInstance().getConnectionPool();
+       Connection conn = (Connection)pool.getObject();
+       ResultSet rs = null;
+       PreparedStatement  stmt = null;
+       boolean flag = false;
+       try
+        {
+            stmt = conn.prepareStatement(UPDATE_SENSORS_LOCATION);
+            stmt.setInt(1, sensor.getLoc().getX1());
+            stmt.setInt(2, sensor.getLoc().getY1());
+            stmt.setInt(3, sensor.getId());
+            stmt.setInt(4, customer.getCustomerId());
+            boolean execute = stmt.execute();
+            System.out.println("safedec.dao.SensorDAOImpl.edit()" + sensor.getId() + " " + sensor.getLoc().getX1() + " " + sensor.getLoc().getY1() );
+            flag = true;
+        }
+       catch( SQLException e)
+        {
+           Logger.getLogger(CustomerDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+           flag = false;
+        }
+        finally
+        {
+           try {
+               stmt.close();
+               pool.releaseObject(conn);
+           } catch (SQLException ex) {
+               Logger.getLogger(CustomerDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+               flag = false;
+           }
+        }
+    return flag;
+    }
+    
+    @Override
+    public boolean editFireSensor( Customer customer, FireSensor sensor) {
        ObjectPool pool =  ViewController.getInstance().getConnectionPool();
        Connection conn = (Connection)pool.getObject();
        ResultSet rs = null;

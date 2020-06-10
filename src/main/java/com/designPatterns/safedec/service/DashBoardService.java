@@ -11,8 +11,9 @@ import com.designPatterns.safedec.dao.AlarmDAO;
 import com.designPatterns.safedec.dao.AlarmDAOImpl;
 import com.designPatterns.safedec.dao.SensorDAO;
 import com.designPatterns.safedec.dao.SensorDAOImpl;
-import com.designPatterns.safedec.models.Alarm;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.models.Alarm;
 
 
 public class DashBoardService {

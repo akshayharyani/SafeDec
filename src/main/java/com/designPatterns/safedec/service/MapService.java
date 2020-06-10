@@ -12,6 +12,7 @@ import com.designPatterns.safedec.dao.AlarmDAOImpl;
 import com.designPatterns.safedec.dao.SensorDAO;
 import com.designPatterns.safedec.dao.SensorDAOImpl;
 import com.designPatterns.safedec.models.Alarm;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.MotionSensor;
 
 /**
@@ -22,7 +23,7 @@ public class MapService {
      public List< Alarm > getAllAlarmsBySection(int sectionId)
     {
         AlarmDAO alarmDAO = new AlarmDAOImpl();
-        List< Alarm > alarms = alarmDAO.getAllAlarmsBySectionId(ViewController.getInstance().getLoggedInUser(),sectionId);
+        List< Alarm > alarms = alarmDAO.getAllAlarms(ViewController.getInstance().getLoggedInUser());
         return alarms;
         
     }

@@ -13,7 +13,7 @@ import com.designPatterns.safedec.dao.AlarmDAO;
 import com.designPatterns.safedec.dao.AlarmDAOImpl;
 import com.designPatterns.safedec.dao.SensorDAO;
 import com.designPatterns.safedec.dao.SensorDAOImpl;
-import com.designPatterns.safedec.models.Alarm;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.Customer;
 import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
@@ -30,12 +30,12 @@ public class SensorService {
         Location loc = new Location( x,y);
         sensor.setLoc(loc);
         System.out.println("safedec.service.SensorService.updateSensorPosition()" + sensor.getClass());
-        if( sensor instanceof Alarm )
+            SensorDAO sensorDAO = new SensorDAOImpl();
+
+        if( sensor instanceof FireSensor )
         {
-            AlarmDAO alarmDAO = new AlarmDAOImpl();
-            return alarmDAO.edit( customer, (Alarm) sensor );
+            return sensorDAO.editFireSensor(customer, (FireSensor) sensor );
         }
-    SensorDAO sensorDAO = new SensorDAOImpl();
-    return sensorDAO.edit( customer, (MotionSensor) sensor );
+    return sensorDAO.editMotionSensor( customer, (MotionSensor) sensor );
     }
 }

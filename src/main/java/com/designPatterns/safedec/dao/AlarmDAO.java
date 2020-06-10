@@ -5,8 +5,9 @@
  */
 package com.designPatterns.safedec.dao;
 
-import java.util.List;
 import com.designPatterns.safedec.models.Alarm;
+import java.util.List;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.Customer;
 import com.designPatterns.safedec.models.MotionSensor;
 
@@ -25,5 +26,5 @@ public interface AlarmDAO {
     public boolean destroy( Customer customer, Alarm alarm );
     public boolean edit( Customer customer, Alarm alarm );
     public List< Alarm > getAllAlarms( Customer customer );
-    public List< Alarm > getAllAlarmsBySectionId( Customer customer, int sectionId );
+    public List< Alarm > getAllAlarmsBySensorId( Customer customer, int sectionId );
 }

@@ -7,24 +7,47 @@ package com.designPatterns.safedec.models;
 
 /**
  *
- * @author Prashul Singh
+ * @author akshayharyani
  */
-public class Alarm extends Sensor{
+public class Alarm {
     
-    int sectionId;
+    int alarmId;
+    String memo;
+    String occuranceDate;
+    int sensorId;
 
-  
-    public int getSectionId() {
-        return sectionId;
+    public int getAlarmId() {
+        return alarmId;
     }
 
-    public void setSectionId(int sectionId) {
-        this.sectionId = sectionId;
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
     }
 
-    @Override
-    public String toString() {
-        return "Alarm{" + "id=" + id + ", loc=" + loc + ", ipAddress=" + ipAddress + ", portNumber=" + portNumber + ", price=" + price + ", sectionId=" + sectionId + '}';
+    public String getMemo() {
+        return memo;
     }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getOccuranceDate() {
+        return occuranceDate;
+    }
+
+    public void setOccuranceDate(String occuranceDate) {
+        this.occuranceDate = occuranceDate;
+    }
+
+    public int getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(int sensorId) {
+        this.sensorId = sensorId;
+    }
+    
+    
     
 }

@@ -7,6 +7,7 @@ package com.designPatterns.safedec.dao;
 
 import java.util.List;
 import com.designPatterns.safedec.models.Customer;
+import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.MotionSensor;
 
 /**
@@ -14,9 +15,11 @@ import com.designPatterns.safedec.models.MotionSensor;
  * @author Prashul Singh
  */
 public interface SensorDAO {
-    public boolean create( Customer customer, MotionSensor sensor );
+    public boolean createMotionSensor( Customer customer, MotionSensor sensor );
+    public boolean createFireSensor( Customer customer, FireSensor sensor );
     public boolean destroy(MotionSensor sensor );
-    public boolean edit( Customer customer, MotionSensor sensor );
+    public boolean editMotionSensor( Customer customer, MotionSensor sensor );
+    public boolean editFireSensor( Customer customer, FireSensor sensor );
     public List< MotionSensor > getAllSensors( Customer customer);
     public List<MotionSensor> getAllSensorsBySectionId(Customer customer, int sectionId);
 }

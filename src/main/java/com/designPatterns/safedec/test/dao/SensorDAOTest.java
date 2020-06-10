@@ -47,7 +47,7 @@ public class SensorDAOTest {
         
        
         SensorDAO sensorDAO = new SensorDAOImpl();
-        boolean flag = sensorDAO.create(customer,sensor);
+        boolean flag = sensorDAO.createMotionSensor(customer,sensor);
         assertEquals(true, flag);
         
     }
@@ -66,7 +66,7 @@ public class SensorDAOTest {
             customer.setCustomerId(1);
             
             SensorDAO sensorDAO = new SensorDAOImpl();
-            boolean flag = sensorDAO.edit(customer, sensor);
+            boolean flag = sensorDAO.editMotionSensor(customer, sensor);
             
     return flag;
             
