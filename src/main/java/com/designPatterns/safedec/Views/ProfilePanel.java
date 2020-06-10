@@ -5,17 +5,28 @@
  */
 package com.designPatterns.safedec.Views;
 
+import com.designPatterns.safedec.controls.ViewController;
+import com.designPatterns.safedec.models.Customer;
+import com.designPatterns.safedec.models.CustomerBuilder;
+import com.designPatterns.safedec.service.UserAdminService;
+import com.designPatterns.safedec.service.UserAdminServiceImpl;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author akshayharyani
  */
 public class ProfilePanel extends javax.swing.JPanel {
 
+    Customer currentUser;
+    
     /**
      * Creates new form ProfilePanel
      */
     public ProfilePanel() {
         initComponents();
+        fillUserData();
+
     }
 
     
@@ -37,19 +48,19 @@ public class ProfilePanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
-        ServiceIdField1 = new javax.swing.JTextField();
-        ServiceIdField2 = new javax.swing.JTextField();
-        ServiceIdField3 = new javax.swing.JTextField();
-        ServiceIdField4 = new javax.swing.JTextField();
-        ServiceIdField5 = new javax.swing.JTextField();
-        ServiceIdField6 = new javax.swing.JTextField();
+        FirstNameField = new javax.swing.JTextField();
+        AddressField = new javax.swing.JTextField();
+        EmailField = new javax.swing.JTextField();
+        PhoneField = new javax.swing.JTextField();
+        EmergencyContact1Field = new javax.swing.JTextField();
+        EmergencyContact2Field = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(500, 500));
 
         ServiceIdLabel.setText("Service Id");
         ServiceIdLabel.setToolTipText("");
 
-        FirstNameLabel.setText("First Name");
+        FirstNameLabel.setText("Name");
         FirstNameLabel.setToolTipText("");
 
         ServiceIdField.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +69,7 @@ public class ProfilePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Last Name");
+        jLabel1.setText("Address");
 
         jLabel2.setText("Email");
 
@@ -75,39 +86,39 @@ public class ProfilePanel extends javax.swing.JPanel {
             }
         });
 
-        ServiceIdField1.addActionListener(new java.awt.event.ActionListener() {
+        FirstNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField1ActionPerformed(evt);
+                FirstNameFieldActionPerformed(evt);
             }
         });
 
-        ServiceIdField2.addActionListener(new java.awt.event.ActionListener() {
+        AddressField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField2ActionPerformed(evt);
+                AddressFieldActionPerformed(evt);
             }
         });
 
-        ServiceIdField3.addActionListener(new java.awt.event.ActionListener() {
+        EmailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField3ActionPerformed(evt);
+                EmailFieldActionPerformed(evt);
             }
         });
 
-        ServiceIdField4.addActionListener(new java.awt.event.ActionListener() {
+        PhoneField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField4ActionPerformed(evt);
+                PhoneFieldActionPerformed(evt);
             }
         });
 
-        ServiceIdField5.addActionListener(new java.awt.event.ActionListener() {
+        EmergencyContact1Field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField5ActionPerformed(evt);
+                EmergencyContact1FieldActionPerformed(evt);
             }
         });
 
-        ServiceIdField6.addActionListener(new java.awt.event.ActionListener() {
+        EmergencyContact2Field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServiceIdField6ActionPerformed(evt);
+                EmergencyContact2FieldActionPerformed(evt);
             }
         });
 
@@ -132,13 +143,13 @@ public class ProfilePanel extends javax.swing.JPanel {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ServiceIdField5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(EmergencyContact1Field, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(ServiceIdField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ServiceIdField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ServiceIdField2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ServiceIdField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ServiceIdField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ServiceIdField6, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(FirstNameField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(AddressField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(EmailField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PhoneField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(EmergencyContact2Field, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
@@ -151,27 +162,27 @@ public class ProfilePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FirstNameLabel)
-                    .addComponent(ServiceIdField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FirstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(ServiceIdField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(ServiceIdField3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(ServiceIdField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ServiceIdField5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(EmergencyContact1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ServiceIdField6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(EmergencyContact2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addComponent(saveButton)
                 .addContainerGap(165, Short.MAX_VALUE))
@@ -184,42 +195,61 @@ public class ProfilePanel extends javax.swing.JPanel {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
+        
+        UserAdminService userAdminService = new UserAdminServiceImpl();
+        int customerId = Integer.valueOf(ServiceIdField.getText());
+        String customerName = FirstNameField.getText();
+        String propertyAddress = AddressField.getText();
+        String phoneNumber = PhoneField.getText();
+        String emailAddress = EmailField.getText();
+        String primaryContactNumber = EmergencyContact1Field.getText();
+        String secondaryContactNumber = EmergencyContact2Field.getText();
+        
+        Customer updatedCustomerInfo= new CustomerBuilder().setCustomerName(customerName).setPropertyAddress(propertyAddress).setPhoneNumber(phoneNumber).setEmaiAddress(emailAddress).setPrimaryContactNumber(primaryContactNumber).setSecondaryContactNumber(secondaryContactNumber).setLicenseCode(currentUser.getLicenseCode()).setMasterPassword(currentUser.getMasterPassword()).setCustomerId(customerId).build();
+       // newCustomerInfo.setCustomerId(customerId);
+        
+        if (userAdminService.editUser(updatedCustomerInfo)) {
+            JOptionPane.showMessageDialog(null, "Successfully updated account details");
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to  update account details");
+        }
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void ServiceIdField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField1ActionPerformed
+    private void FirstNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField1ActionPerformed
+    }//GEN-LAST:event_FirstNameFieldActionPerformed
 
-    private void ServiceIdField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField2ActionPerformed
+    private void AddressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddressFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField2ActionPerformed
+    }//GEN-LAST:event_AddressFieldActionPerformed
 
-    private void ServiceIdField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField3ActionPerformed
+    private void EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField3ActionPerformed
+    }//GEN-LAST:event_EmailFieldActionPerformed
 
-    private void ServiceIdField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField4ActionPerformed
+    private void PhoneFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PhoneFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField4ActionPerformed
+    }//GEN-LAST:event_PhoneFieldActionPerformed
 
-    private void ServiceIdField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField5ActionPerformed
+    private void EmergencyContact1FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyContact1FieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField5ActionPerformed
+    }//GEN-LAST:event_EmergencyContact1FieldActionPerformed
 
-    private void ServiceIdField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceIdField6ActionPerformed
+    private void EmergencyContact2FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyContact2FieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ServiceIdField6ActionPerformed
+    }//GEN-LAST:event_EmergencyContact2FieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AddressField;
+    private javax.swing.JTextField EmailField;
+    private javax.swing.JTextField EmergencyContact1Field;
+    private javax.swing.JTextField EmergencyContact2Field;
+    private javax.swing.JTextField FirstNameField;
     private javax.swing.JLabel FirstNameLabel;
+    private javax.swing.JTextField PhoneField;
     private javax.swing.JTextField ServiceIdField;
-    private javax.swing.JTextField ServiceIdField1;
-    private javax.swing.JTextField ServiceIdField2;
-    private javax.swing.JTextField ServiceIdField3;
-    private javax.swing.JTextField ServiceIdField4;
-    private javax.swing.JTextField ServiceIdField5;
-    private javax.swing.JTextField ServiceIdField6;
     private javax.swing.JLabel ServiceIdLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -228,4 +258,18 @@ public class ProfilePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
+
+    private void fillUserData() {
+        currentUser = ViewController.getInstance().getLoggedInUser();
+        ServiceIdField.setText(String.valueOf(currentUser.getCustomerId()));
+        FirstNameField.setText(currentUser.getCustomerName());
+        AddressField.setText(currentUser.getPropertyAddress());
+        EmailField.setText(currentUser.getEmailAddress());
+        PhoneField.setText(currentUser.getPhoneNumber());
+        EmergencyContact1Field.setText(currentUser.getPrimaryContactNumber());        
+        EmergencyContact2Field.setText(currentUser.getSecondaryContactNumber());
+        
+        validate();
+        repaint();
+    }
 }

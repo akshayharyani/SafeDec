@@ -40,13 +40,13 @@
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ServiceIdField5" pref="300" max="32767" attributes="0"/>
+                          <Component id="EmergencyContact1Field" pref="300" max="32767" attributes="0"/>
                           <Component id="ServiceIdField" alignment="1" max="32767" attributes="0"/>
-                          <Component id="ServiceIdField1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="ServiceIdField2" alignment="1" max="32767" attributes="0"/>
-                          <Component id="ServiceIdField3" alignment="1" max="32767" attributes="0"/>
-                          <Component id="ServiceIdField4" alignment="1" max="32767" attributes="0"/>
-                          <Component id="ServiceIdField6" alignment="1" max="32767" attributes="0"/>
+                          <Component id="FirstNameField" alignment="1" max="32767" attributes="0"/>
+                          <Component id="AddressField" alignment="1" max="32767" attributes="0"/>
+                          <Component id="EmailField" alignment="1" max="32767" attributes="0"/>
+                          <Component id="PhoneField" alignment="1" max="32767" attributes="0"/>
+                          <Component id="EmergencyContact2Field" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -65,32 +65,32 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="FirstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField1" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="FirstNameField" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField2" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="AddressField" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField3" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="EmailField" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField4" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="PhoneField" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField5" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="EmergencyContact1Field" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="ServiceIdField6" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="EmergencyContact2Field" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="saveButton" min="-2" max="-2" attributes="0"/>
@@ -108,7 +108,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="FirstNameLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="First Name"/>
+        <Property name="text" type="java.lang.String" value="Name"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -119,7 +119,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Last Name"/>
+        <Property name="text" type="java.lang.String" value="Address"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -150,34 +150,34 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField1">
+    <Component class="javax.swing.JTextField" name="FirstNameField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FirstNameFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField2">
+    <Component class="javax.swing.JTextField" name="AddressField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddressFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField3">
+    <Component class="javax.swing.JTextField" name="EmailField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmailFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField4">
+    <Component class="javax.swing.JTextField" name="PhoneField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PhoneFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField5">
+    <Component class="javax.swing.JTextField" name="EmergencyContact1Field">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmergencyContact1FieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="ServiceIdField6">
+    <Component class="javax.swing.JTextField" name="EmergencyContact2Field">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ServiceIdField6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmergencyContact2FieldActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
