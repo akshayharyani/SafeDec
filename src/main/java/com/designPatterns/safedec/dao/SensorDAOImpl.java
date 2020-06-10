@@ -45,9 +45,9 @@ private static final String ISNERT_MOTION_SENSOR = "INSERT INTO `customer_sensor
         + " `ipAddress`,"
         + " `port`,"
         + " `cost`,"
-        + " `type`,"
+        + " `sensorType`,"
         + " `isCameraEnabled`)"
-        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 
 private static final String UPDATE_SENSORS_LOCATION = "UPDATE `customer_sensor_relation` SET "
@@ -78,7 +78,7 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
             stmt.setInt(3, sensor.getLoc().getY1());
             stmt.setInt(4, customer.getCustomerId());
             stmt.setInt(5, sensor.getId());
-            stmt.setString(8, sensor.getIpAddress());
+            stmt.setString(6, sensor.getIpAddress());
             stmt.setInt(7, sensor.getPortNumber());
             stmt.setInt(8, sensor.getPrice());
             stmt.setString(9, "Motion");
@@ -118,7 +118,7 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
             stmt.setInt(3, sensor.getLoc().getY1());
             stmt.setInt(4, customer.getCustomerId());
             stmt.setInt(5, sensor.getId());
-            stmt.setString(8, sensor.getIpAddress());
+            stmt.setString(6, sensor.getIpAddress());
             stmt.setInt(7, sensor.getPortNumber());
             stmt.setInt(8, sensor.getPrice());
             stmt.setString(9, "Fire");

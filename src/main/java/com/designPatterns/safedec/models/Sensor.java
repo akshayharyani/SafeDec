@@ -15,6 +15,15 @@ public class Sensor {
     String ipAddress;
     int portNumber;
     int price;
+    int sectionId;
+
+    public int getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
+    }
     
     public int getId() {
         return id;

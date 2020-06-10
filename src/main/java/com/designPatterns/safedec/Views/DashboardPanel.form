@@ -95,10 +95,16 @@
         <Component class="javax.swing.JTable" name="SensorsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object[][]{&#xa;       &#xa;    },&#xa;    new String [] {&#xa;        &quot;Sensor Id&quot;, &quot;Sensor Type&quot;, &quot;Sensor Cost&quot;, &quot;Sensor Install Date&quot;, &quot;Sensor Position&quot;&#xa;    }&#xa;)" type="code"/>
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object[][]{&#xa;       &#xa;    },&#xa;    new String [] {&#xa;        &quot;Sensor Id&quot;, &quot;Section Id&quot;, &quot;Sensor Type&quot;, &quot;Sensor Cost&quot;, &quot;Sensor Position&quot;&#xa;    }&#xa;)" type="code"/>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[1500, 1500]"/>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
           <AuxValues>

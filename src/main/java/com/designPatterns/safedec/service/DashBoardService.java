@@ -14,6 +14,7 @@ import com.designPatterns.safedec.dao.SensorDAOImpl;
 import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.MotionSensor;
 import com.designPatterns.safedec.models.Alarm;
+import com.designPatterns.safedec.models.Sensor;
 
 
 public class DashBoardService {
@@ -30,10 +31,10 @@ public class DashBoardService {
         
     }
     
-    public List< MotionSensor > getAllSensors()
+    public List< Sensor > getAllSensors()
     {
         SensorDAO sensorDAO =  new SensorDAOImpl();
-        List< MotionSensor > sensors = sensorDAO.getAllSensors(ViewController.getInstance().getLoggedInUser());
+        List< Sensor > sensors = sensorDAO.getAllSensors(ViewController.getInstance().getLoggedInUser());
         return sensors;
     }
 }

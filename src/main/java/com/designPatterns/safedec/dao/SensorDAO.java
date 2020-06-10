@@ -9,6 +9,7 @@ import java.util.List;
 import com.designPatterns.safedec.models.Customer;
 import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.models.Sensor;
 
 /**
  *
@@ -20,6 +21,6 @@ public interface SensorDAO {
     public boolean destroy(MotionSensor sensor );
     public boolean editMotionSensor( Customer customer, MotionSensor sensor );
     public boolean editFireSensor( Customer customer, FireSensor sensor );
-    public List< MotionSensor > getAllSensors( Customer customer);
+    public List< Sensor > getAllSensors( Customer customer);
     public List<MotionSensor> getAllSensorsBySectionId(Customer customer, int sectionId);
 }

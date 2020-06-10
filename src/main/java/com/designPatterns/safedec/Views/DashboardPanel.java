@@ -1,5 +1,11 @@
 package com.designPatterns.safedec.Views;
 
+import com.designPatterns.safedec.models.Sensor;
+import com.designPatterns.safedec.models.Alarm;
+import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.service.DashBoardService;
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,14 +23,61 @@ public class DashboardPanel extends javax.swing.JPanel {
      */
     public DashboardPanel() {
         initComponents();
+//        javax.swing.table.DefaultTableModel sensorModel = (javax.swing.table.DefaultTableModel) SensorsTable.getModel();
+//        sensorModel.addRow(new Object[]{"1", "Fire Detector", "$10","02/02/2020","X,Y"});
+//        sensorModel.addRow(new Object[]{"2", "Motion Sensor(With Camera)", "$20","02/02/2020","X,Y"});
+//        sensorModel.addRow(new Object[]{"3", "Motion Sensor(Without Camera)", "18","02/02/2020","X,Y"});
+//        
+//        
+//
+//        javax.swing.table.DefaultTableModel alarmModel = (javax.swing.table.DefaultTableModel) AlarmTable.getModel();
+//        alarmModel.addRow(new Object[]{"1", "1","03/02/2020","Fire detector alarm"});
+           updateComponents();
+
+    }
+    
+        private void updateComponents(){
+        DashBoardService dashBoardService = new DashBoardService();
+        List<Sensor> allSensors = dashBoardService.getAllSensors();
+        List< Alarm > allAlarms = dashBoardService.getAllAlarmSensors();
         javax.swing.table.DefaultTableModel sensorModel = (javax.swing.table.DefaultTableModel) SensorsTable.getModel();
-        sensorModel.addRow(new Object[]{"1", "Fire Detector", "$10","02/02/2020","X,Y"});
-        sensorModel.addRow(new Object[]{"2", "Motion Sensor(With Camera)", "$20","02/02/2020","X,Y"});
-        sensorModel.addRow(new Object[]{"3", "Motion Sensor(Without Camera)", "18","02/02/2020","X,Y"});
+        
+        for( Sensor sensor : allSensors )
+        {
+            String type = "fire sensor";
+            if (sensor instanceof MotionSensor){
+                type = "motion sensor ";
+                MotionSensor ms = (MotionSensor) sensor;
+                if(ms.isIsCamera())
+                    type += "(with camera)";
+                else
+                    type += "(without camera)";
 
+            }
+                    
+            Object[]  tableRow = new Object[8];
+            tableRow[0]= sensor.getId();
+            tableRow[1]= sensor.getSectionId();
+            tableRow[1]= type;
+            tableRow[2]= sensor.getPrice();
+            tableRow[3]= sensor.getLoc().getX1()+","+sensor.getLoc().getY1();
+            
+             sensorModel.addRow(tableRow);
+        }
+        
         javax.swing.table.DefaultTableModel alarmModel = (javax.swing.table.DefaultTableModel) AlarmTable.getModel();
-        alarmModel.addRow(new Object[]{"1", "1","03/02/2020","Fire detector alarm"});
-
+         for( Alarm alarm : allAlarms )
+         {
+            Object[]  tableRow = new Object[8];
+            tableRow[0]= alarm.getAlarmId();
+            tableRow[1]= alarm.getSensorId();
+            tableRow[2]= alarm.getOccuranceDate();
+            tableRow[3]= alarm.getMemo();
+             alarmModel.addRow(tableRow);
+             
+         }
+        
+        
     }
 
     /**
@@ -62,7 +115,7 @@ public class DashboardPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Sensor Id", "Sensor Type", "Sensor Cost", "Sensor Install Date", "Sensor Position"
+                "Sensor Id", "Section Id", "Sensor Type", "Sensor Cost", "Sensor Position"
             }
         ));
         SensorsTable.setSize(new java.awt.Dimension(1500, 1500));

@@ -13,6 +13,7 @@ import com.designPatterns.safedec.dao.SensorDAOImpl;
 import com.designPatterns.safedec.models.Customer;
 import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.models.Sensor;
 
 /**
  *
@@ -25,7 +26,7 @@ public class SensorDAOTest {
         System.out.println("safedec.test.dao.SensorDAOTest.create()");
         
         Customer customer = new Customer();
-        customer.setCustomerId(1);
+        customer.setCustomerId(123456);
  
         int sensorId = 100;
         String ipAddress = "198.789.23.456";
@@ -91,9 +92,9 @@ public class SensorDAOTest {
         Customer customer = new Customer();
         customer.setCustomerId(1);
         SensorDAO sensorDAO = new SensorDAOImpl();
-        List<MotionSensor> allSensors = sensorDAO.getAllSensors(customer);
+        List<Sensor> allSensors = sensorDAO.getAllSensors(customer);
         assertEquals(1, allSensors.size());
-        for( MotionSensor sensor :  allSensors )
+        for( Sensor sensor :  allSensors )
         {
             assertEquals(1, sensor.getId());
             assertEquals(1, sensor.getSectionId());

@@ -38,8 +38,8 @@ private static final String INSERT_ALARMS = "INSERT INTO `"+TABLENAME+"` "
         + "(`"+CUSTOMERID+"`,"
         + " `"+SENSORID+"`,"
         + " `"+OCCURANCE+"`,"
-        + " `"+MEMO+"`,"
-        + " VALUES (?, ?, ?, ?);";
+        + " `"+MEMO+"`) "
+        + " VALUES (?, ?, ?, ?)";
 
 
 private static final String UPDATE_ALARMS = "UPDATE `"+TABLENAME+"` SET "
@@ -67,10 +67,10 @@ private static final String GET_ALARMS_BY_SENSOR_ID = "select * from "+TABLENAME
        try
         {
             stmt = conn.prepareStatement(INSERT_ALARMS);
-            stmt.setInt(1, alarm.getSensorId());
             stmt.setInt(1, customer.getCustomerId());
-            stmt.setString(2, alarm.getOccuranceDate());
-            stmt.setString(3, alarm.getMemo());
+            stmt.setInt(2, alarm.getSensorId());
+            stmt.setString(3, alarm.getOccuranceDate());
+            stmt.setString(4, alarm.getMemo());
             stmt.execute();
             flag = true;
         }

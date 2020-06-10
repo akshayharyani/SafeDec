@@ -16,7 +16,7 @@ public class SensorDAOTestRunner {
     public static void main( String args[] )
     {
         SensorDAOTest sensorDAOTest =  new SensorDAOTest();
-        sensorDAOTest.getAllSensorsBySection();
+        sensorDAOTest.create();
         //sensorDAOTest.getAllSensors();
         
         
