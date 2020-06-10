@@ -47,6 +47,10 @@ public class Alarm {
     public void setSensorId(int sensorId) {
         this.sensorId = sensorId;
     }
+
+    public void setSensorId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

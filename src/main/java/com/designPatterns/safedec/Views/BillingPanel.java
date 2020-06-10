@@ -6,6 +6,9 @@
 package com.designPatterns.safedec.Views;
 
 
+import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.models.Sensor;
+import com.designPatterns.safedec.service.BillingService;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -16,6 +19,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.List;
 
 /**
  *
@@ -26,16 +30,46 @@ public class BillingPanel extends javax.swing.JPanel {
     private Document document;
     private PdfWriter writer;
     private javax.swing.table.DefaultTableModel billingModel;
-    
+    private BillingService billingService;
+
     /**
      * Creates new form BillingPanel
      */
     public BillingPanel() {
+        billingService = new BillingService();
         initComponents();
-        billingModel = (javax.swing.table.DefaultTableModel) billingTable.getModel();
-        billingModel.addRow(new Object[]{"1","Fire sensor","02/02/2020","$20"});
+        updateTable();
+        updateCostLabel();
     }
 
+    public void updateCostLabel(){
+        costLabel.setText(String.valueOf(billingService.getTotalAmount()));
+    }
+    
+    public void updateTable(){
+        billingModel = (javax.swing.table.DefaultTableModel) billingTable.getModel();
+
+        List<Sensor> allSensors = billingService.getAllSensors();
+        for( Sensor sensor : allSensors ){
+            String type = "fire sensor";
+            if (sensor instanceof MotionSensor){
+                type = "motion sensor ";
+                MotionSensor ms = (MotionSensor) sensor;
+                if(ms.isIsCamera())
+                    type += "(with camera)";
+                else
+                    type += "(without camera)";
+
+            }
+                    
+            Object[]  tableRow = new Object[8];
+            tableRow[0]= sensor.getId();
+            tableRow[1]= type;
+            tableRow[2]= sensor.getSectionId();
+            tableRow[3]= sensor.getPrice();
+            billingModel.addRow(tableRow);
+        }
+    }
     public void openPdf() throws FileNotFoundException, DocumentException {
        
     }
@@ -65,7 +99,6 @@ public class BillingPanel extends javax.swing.JPanel {
   
 
         document.add(pdfTable);
-//        document.add(new Paragraph("Hello World!"));
         document.close();
     }
     
@@ -94,7 +127,7 @@ public class BillingPanel extends javax.swing.JPanel {
             new Object [][] {
             },
             new String [] {
-                "Sensor Id","Sensor Type", "Install Date", "Price"
+                "Sensor Id","Sensor Type", "Section Id", "Price"
             }
         ));
         billingTable.setSize(new java.awt.Dimension(300, 300));
@@ -118,10 +151,10 @@ public class BillingPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
+                        .addGap(230, 230, 230)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(totalLabel)
@@ -129,37 +162,29 @@ public class BillingPanel extends javax.swing.JPanel {
                                 .addComponent(costLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(saveButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(56, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalLabel)
                     .addComponent(costLabel)
                     .addComponent(saveButton))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         saveButton.getAccessibleContext().setAccessibleName("Save to Pdf");
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        try {
-            openPdf();
-            addData();
-//            closePdf();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
+        billingService.createReport();
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

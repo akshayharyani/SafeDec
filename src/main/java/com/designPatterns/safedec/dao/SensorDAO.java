@@ -22,5 +22,5 @@ public interface SensorDAO {
     public boolean editMotionSensor( Customer customer, MotionSensor sensor );
     public boolean editFireSensor( Customer customer, FireSensor sensor );
     public List< Sensor > getAllSensors( Customer customer);
-    public List<MotionSensor> getAllSensorsBySectionId(Customer customer, int sectionId);
+    public List<Sensor> getAllSensorsBySectionId(Customer customer, int sectionId);
 }

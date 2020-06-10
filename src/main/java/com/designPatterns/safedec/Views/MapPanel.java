@@ -16,7 +16,14 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import com.designPatterns.safedec.business.FlyweightSensorIconFactory;
+import com.designPatterns.safedec.business.SensorState;
+import com.designPatterns.safedec.business.SensorStateOff;
+import com.designPatterns.safedec.business.SensorStateOn;
+import com.designPatterns.safedec.controls.ViewController;
+import com.designPatterns.safedec.dao.SensorDAO;
+import com.designPatterns.safedec.dao.SensorDAOImpl;
 import com.designPatterns.safedec.models.FireSensor;
+import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
 import com.designPatterns.safedec.models.Sensor;
 import com.designPatterns.safedec.service.MapService;
@@ -32,11 +39,13 @@ public class MapPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MapView
+     *
      */
+    private int sectionId = 1;
     public MapPanel() {
         initComponents();
         updateComponents();
-        
+        updateTable();
     }
 
     /**
@@ -74,22 +83,22 @@ public class MapPanel extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable1);
 
         mainPanel.setMaximumSize(new java.awt.Dimension(500, 500));
-        mainPanel.setPreferredSize(new java.awt.Dimension(700, 700));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1260, 411));
 
         subMapPanel.setMaximumSize(new java.awt.Dimension(200, 200));
         subMapPanel.setName(""); // NOI18N
         subMapPanel.setOpaque(false);
-        subMapPanel.setPreferredSize(new java.awt.Dimension(200, 200));
+        subMapPanel.setPreferredSize(new java.awt.Dimension(950, 470));
 
         javax.swing.GroupLayout subMapPanelLayout = new javax.swing.GroupLayout(subMapPanel);
         subMapPanel.setLayout(subMapPanelLayout);
         subMapPanelLayout.setHorizontalGroup(
             subMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 601, Short.MAX_VALUE)
+            .addGap(0, 882, Short.MAX_VALUE)
         );
         subMapPanelLayout.setVerticalGroup(
             subMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 472, Short.MAX_VALUE)
         );
 
         sensorTableLabel.setText("Sensors");
@@ -99,14 +108,14 @@ public class MapPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Sensor Id", "Pos"
+                "Sensor Id", "Type","Pos"
             }
         ));
         jScrollPane1.setViewportView(sensorsTable);
 
         jLabel1.setText("Section");
 
-        sectionDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        sectionDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Section 1", "Section 2", "Section 3", "Section 4" }));
         sectionDropdown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sectionDropdownActionPerformed(evt);
@@ -128,7 +137,6 @@ public class MapPanel extends javax.swing.JPanel {
         });
 
         addSecuritySensor.setText("Add Security Sensor");
-        addSecuritySensor.setActionCommand("Add Security Sensor");
         addSecuritySensor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addSecuritySensorActionPerformed(evt);
@@ -155,8 +163,8 @@ public class MapPanel extends javax.swing.JPanel {
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(subMapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18))
+                                .addComponent(subMapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(sensorTableLabel)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -174,60 +182,90 @@ public class MapPanel extends javax.swing.JPanel {
                 .addComponent(sensorTableLabel)
                 .addGap(5, 5, 5)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subMapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jScrollPane1)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(subMapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(5, 5, 5))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 785, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1063, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 546, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void sectionDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionDropdownActionPerformed
         // TODO add your handling code here:
+        System.out.println("section dropdown ");
+        sectionId = (((javax.swing.JComboBox) evt.getSource()).getSelectedIndex() + 1);
+        subMapPanel.removeAll();
+        subMapPanel.revalidate();
+        subMapPanel.repaint();
+        updateComponents();
+        updateTable();
+        revalidate();
+        repaint();
     }//GEN-LAST:event_sectionDropdownActionPerformed
 
     private void addFireSensorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFireSensorButtonActionPerformed
         // TODO add your handling code here:
+        String ipAddress = "198.789.23.456";
+        Location loc = new Location(100, 200);
+        int portNumber  = 3456;
+        int price = 20;
+        
+        FireSensor sensor = new FireSensor();
+        sensor.setIpAddress(ipAddress);
+        
+        sensor.setLoc(loc);
+        sensor.setPortNumber(portNumber);
+        sensor.setPrice(price);
+        sensor.setSectionId(sectionId);
+        
+       
+        SensorDAO sensorDAO = new SensorDAOImpl();
+        boolean flag = sensorDAO.createFireSensor(ViewController.getInstance().getLoggedInUser(),sensor);
+        allSensors.add(sensor);
+        updateTable();
+        createNewSensorIcon(sensor);
     }//GEN-LAST:event_addFireSensorButtonActionPerformed
 
     private void addSecuritySensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSecuritySensorActionPerformed
         // TODO add your handling code here:
+         
+        String ipAddress = "198.789.23.456";
+        Location loc = new Location(100, 200);
+        int portNumber  = 3456;
+        int price = 10;
+        
+        MotionSensor sensor = new MotionSensor();
+        sensor.setIpAddress(ipAddress);
+        sensor.setIsCamera(true);
+        
+        sensor.setLoc(loc);
+        sensor.setPortNumber(portNumber);
+        sensor.setPrice(price);
+        sensor.setSectionId(sectionId);
+        
+       
+        SensorDAO sensorDAO = new SensorDAOImpl();
+        boolean flag = sensorDAO.createMotionSensor(ViewController.getInstance().getLoggedInUser(),sensor);
+        allSensors.add(sensor);
+        updateTable();
+        createNewSensorIcon(sensor);
+        
     }//GEN-LAST:event_addSecuritySensorActionPerformed
 
     private void addFireSensorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFireSensorButtonMouseClicked
         // TODO add your handling code here:
-            // Add new Sensor Icons
-            Sensor sensor = new FireSensor();
-            sensor.setId(1);
-            SensorIcon newSensor = FlyweightSensorIconFactory.getSensorIcon(sensor);
-            subMapPanel.add(newSensor);
-            sensorIcons.put(newSensor.getSensorId(), newSensor);
-            Insets insets = subMapPanel.getInsets();
-            int ScreenPosX = insets.left + newSensor.getIcon().getIconWidth();
-            int ScreenPosY = insets.top;
-            int width = newSensor.getIcon().getIconWidth();
-            int height = newSensor.getIcon().getIconHeight();
-            
-//            try {
-//                String[] coordinates = sensor.getLocation().split(",");
-//                if (coordinates.length > 0) ScreenPosX = Integer.parseInt(coordinates[0].trim());
-//                if (coordinates.length > 1) ScreenPosY = Integer.parseInt(coordinates[1].trim());
-//            } finally {
-//                newSensor.setBounds(ScreenPosX, ScreenPosY, width, height);
-//            }
+
     }//GEN-LAST:event_addFireSensorButtonMouseClicked
 
     private List< FireSensor > alarms;
@@ -247,16 +285,88 @@ public class MapPanel extends javax.swing.JPanel {
     private javax.swing.JTable sensorsTable;
     private javax.swing.JPanel subMapPanel;
     // End of variables declaration//GEN-END:variables
+//
+
 
     private void updateComponents() {
         subMapPanel.setLayout(null);
-
-        ImageIcon imageIcon = new ImageIcon("/Users/akshayharyani/NetBeansProjects/SafeDec/src/main/java/com/designPatterns/safedec/res/BuildingA.jpg");
+        System.out.println("safedec.views.MapView.updateComponents()");
+        URL url = getClass().getResource("/BuildingA.jpg");
+        ImageIcon imageIcon = new ImageIcon(url);
         JLabel mapPicLabel = new javax.swing.JLabel(imageIcon);
         subMapPanel.add(mapPicLabel);
-        validate();
-        repaint();
+        Insets insets = subMapPanel.getInsets();
+        System.out.println( mapPicLabel.getIcon().getIconWidth() + " " + mapPicLabel.getIcon().getIconHeight());
+        mapPicLabel.setBounds(insets.left, insets.top, mapPicLabel.getIcon().getIconWidth(), mapPicLabel.getIcon().getIconHeight());
         
+        MapService service = new MapService();
+        allSensors = new ArrayList< Sensor >();
+        allSensors.addAll(service.getAllSensorsBySection(sectionId));
+
+       sensorIcons = new HashMap<>();
+
+       refreshSensorIcons();
     }
+    
+     private void refreshSensorIcons()
+     {      
+        Set<Integer> exsitingSensorIds = new HashSet<>();
+        
+        for (Sensor sensor : allSensors) {
+            // Record all existing sensor ids for deleting missing sensors
+            exsitingSensorIds.add(sensor.getId());
+            // Donot add duplicated sensor icons
+            if (sensorIcons.containsKey(sensor.getId())) {
+                continue;
+            }
+            
+            createNewSensorIcon(sensor);
+           
+        }
+     }
+     
+     public void createNewSensorIcon(Sensor sensor){
+            SensorIcon newSensor = FlyweightSensorIconFactory.getSensorIcon(sensor);
+            subMapPanel.add(newSensor);
+            sensorIcons.put(newSensor.getSensorId(), newSensor);
+            Insets insets = subMapPanel.getInsets();
+            int ScreenPosX = insets.left + newSensor.getIcon().getIconWidth();
+            int ScreenPosY = insets.top;
+            int width = newSensor.getIcon().getIconWidth();
+            int height = newSensor.getIcon().getIconHeight();
+            ScreenPosX = sensor.getLoc().getX1();
+            ScreenPosY = sensor.getLoc().getY1();
+            newSensor.setBounds(ScreenPosX, ScreenPosY, width, height);
+            SensorState newState = new SensorStateOn();
+
+            newSensor.changeState(newState);
+
+     }
+     
+     public void goActiveState() {
+        SensorState newState = new SensorStateOn();
+        for (Long sensorId: sensorIcons.keySet()) {
+            sensorIcons.get(sensorId).changeState(newState);
+        }
+    }
+    
+    private void updateTable( ) {
+        javax.swing.table.DefaultTableModel sensorModel = (javax.swing.table.DefaultTableModel) sensorsTable.getModel();
+        sensorModel.setRowCount(0);
+        for( Sensor sensor : allSensors )
+        {
+            Object[]  tableRow = new Object[8];
+            tableRow[0]= sensor.getId();
+            if( sensor instanceof MotionSensor )
+                tableRow[1] = "MotionSensor";
+            else
+                tableRow[1] = "FireSensor";
+            tableRow[2]= sensor.getLoc().getX1()+","+sensor.getLoc().getY1();
+            
+             sensorModel.addRow(tableRow);
+        }
+       
+    }
+
      
 }

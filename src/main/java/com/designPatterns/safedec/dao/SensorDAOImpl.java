@@ -20,6 +20,7 @@ import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
 import com.designPatterns.safedec.models.Sensor;
+import java.sql.Statement;
 
 /**
  *
@@ -39,15 +40,15 @@ private static final String ISCAMERAENABLED = "iscameraEnabled";
 private static final String TYPE = "sensorType";
 
 private static final String ISNERT_MOTION_SENSOR = "INSERT INTO `customer_sensor_relation` "
-        + "(`sectionId`,"
+        + "("
         + " `x1`,`y1`,"
-        + " `customerId`, `sensorId`,"
+        + " `customerId`, `sectionId`,"
         + " `ipAddress`,"
         + " `port`,"
         + " `cost`,"
         + " `sensorType`,"
         + " `isCameraEnabled`)"
-        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 
 private static final String UPDATE_SENSORS_LOCATION = "UPDATE `customer_sensor_relation` SET "
@@ -72,18 +73,25 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
        boolean flag = false;
        try
         {
-            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR);
-            stmt.setInt(1, sensor.getSectionId());
-            stmt.setInt(2, sensor.getLoc().getX1());
-            stmt.setInt(3, sensor.getLoc().getY1());
-            stmt.setInt(4, customer.getCustomerId());
-            stmt.setInt(5, sensor.getId());
-            stmt.setString(6, sensor.getIpAddress());
-            stmt.setInt(7, sensor.getPortNumber());
-            stmt.setInt(8, sensor.getPrice());
-            stmt.setString(9, "Motion");
-            stmt.setBoolean(10, sensor.isIsCamera());
+            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, sensor.getLoc().getX1());
+            stmt.setInt(2, sensor.getLoc().getY1());
+            stmt.setInt(3, customer.getCustomerId());
+            stmt.setInt(4, sensor.getSectionId());
+            stmt.setString(5, sensor.getIpAddress());
+            stmt.setInt(6, sensor.getPortNumber());
+            stmt.setInt(7, sensor.getPrice());
+            stmt.setString(8, "Motion");
+            stmt.setBoolean(9, sensor.isIsCamera());
+//            stmt.executeUpdate();
             stmt.executeUpdate();
+            int id = 0;
+            rs = stmt.getGeneratedKeys();
+            if (rs.next()){
+                id=rs.getInt(1);
+            }
+
+            sensor.setId(id);
             flag = true;
         }
         catch( SQLException e)
@@ -112,19 +120,24 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
        boolean flag = false;
        try
         {
-            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR);
-            stmt.setInt(1, sensor.getSectionId());
-            stmt.setInt(2, sensor.getLoc().getX1());
-            stmt.setInt(3, sensor.getLoc().getY1());
-            stmt.setInt(4, customer.getCustomerId());
-            stmt.setInt(5, sensor.getId());
-            stmt.setString(6, sensor.getIpAddress());
-            stmt.setInt(7, sensor.getPortNumber());
-            stmt.setInt(8, sensor.getPrice());
-            stmt.setString(9, "Fire");
-            stmt.setBoolean(10, false);
+            stmt = conn.prepareStatement(ISNERT_MOTION_SENSOR, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, sensor.getLoc().getX1());
+            stmt.setInt(2, sensor.getLoc().getY1());
+            stmt.setInt(3, customer.getCustomerId());
+            stmt.setInt(4, sensor.getSectionId());
+            stmt.setString(5, sensor.getIpAddress());
+            stmt.setInt(6, sensor.getPortNumber());
+            stmt.setInt(7, sensor.getPrice());
+            stmt.setString(8, "Fire");
+            stmt.setBoolean(9, false);
             stmt.executeUpdate();
-            flag = true;
+            int id = 0;
+            rs = stmt.getGeneratedKeys();
+            if (rs.next()){
+                id=rs.getInt(1);
+            }
+            sensor.setId(id);
+            flag = true;           
         }
         catch( SQLException e)
         {
@@ -317,33 +330,49 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
         }
     return sensors;
     }
-    public List<MotionSensor> getAllSensorsBySectionId(Customer customer, int sectionId) {
+    
+@Override
+    public List<Sensor> getAllSensorsBySectionId(Customer customer, int sectionId) {
      ObjectPool pool =  ViewController.getInstance().getConnectionPool();
        Connection conn = (Connection)pool.getObject();
        ResultSet rs = null;
        PreparedStatement  stmt = null;
        boolean flag = false;
-       List< MotionSensor > sensors = new ArrayList< MotionSensor >();
+       List< Sensor > sensors = new ArrayList< Sensor >();
        try
         {
             stmt = conn.prepareStatement(GET_SENSORS_BY_SECTION_ID);
             stmt.setInt(1, customer.getCustomerId());
             stmt.setInt(2, sectionId);
             rs = stmt.executeQuery();
-            sensors = new ArrayList< MotionSensor >();
+            sensors = new ArrayList< Sensor >();
             while( rs.next() )
             {
-                MotionSensor sensor = new MotionSensor();
-                sensor.setSectionId( rs.getInt(SECTIONID) );  
-                sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
-                sensor.setPrice(0);
-                sensor.setId( rs.getInt(SENSORID) );
-                sensor.setIpAddress(rs.getString(IPADDRESS));
-                sensor.setIsCamera(rs.getBoolean(ISCAMERAENABLED));
-                sensor.setPrice(rs.getInt(COST));
-                sensor.setPortNumber(rs.getInt(PORT));
-                
-                sensors.add( sensor );
+                 if(rs.getString(TYPE).equals("Fire")){
+                    FireSensor sensor  = new FireSensor();
+                    sensor.setSectionId( rs.getInt(SECTIONID) );  
+                    sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
+                    sensor.setPrice(0);
+                    sensor.setId( rs.getInt(SENSORID) );
+                    sensor.setIpAddress(rs.getString(IPADDRESS));
+                    sensor.setPrice(rs.getInt(COST));
+                    sensor.setPortNumber(rs.getInt(PORT));
+                    sensors.add( sensor );
+
+                }else{
+                    MotionSensor sensor = new MotionSensor();
+                    sensor.setSectionId( rs.getInt(SECTIONID) );  
+                    sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
+                    sensor.setPrice(0);
+                    sensor.setId( rs.getInt(SENSORID) );
+                    sensor.setIpAddress(rs.getString(IPADDRESS));
+                    sensor.setIsCamera(rs.getBoolean(ISCAMERAENABLED));
+                    sensor.setPrice(rs.getInt(COST));
+                    sensor.setPortNumber(rs.getInt(PORT));
+                    sensors.add( sensor );
+
+                }
+       
             }
             flag = true;
         }
@@ -364,4 +393,7 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
         }
     return sensors;
     }
+    
+    
+    
 }

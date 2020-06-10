@@ -28,15 +28,13 @@ public class SensorDAOTest {
         Customer customer = new Customer();
         customer.setCustomerId(123456);
  
-        int sensorId = 100;
         String ipAddress = "198.789.23.456";
         Location loc = new Location(100, 200);
         int portNumber  = 3456;
         int price = 300;
-        int sectionId = 2;
+        int sectionId = 1;
         
         MotionSensor sensor = new MotionSensor();
-        sensor.setId(sensorId);
         sensor.setIpAddress(ipAddress);
         sensor.setIsCamera(true);
         
@@ -79,8 +77,8 @@ public class SensorDAOTest {
         Customer customer = new Customer();
         customer.setCustomerId(1);
         SensorDAO sensorDAO = new SensorDAOImpl();
-        List<MotionSensor> allSensors = sensorDAO.getAllSensorsBySectionId(customer,1);
-        for( MotionSensor sensor :  allSensors )
+        List<Sensor> allSensors = sensorDAO.getAllSensorsBySectionId(customer,1);
+        for( Sensor sensor :  allSensors )
         {
             assertEquals(1, sensor.getId());
             assertEquals(1, sensor.getSectionId());

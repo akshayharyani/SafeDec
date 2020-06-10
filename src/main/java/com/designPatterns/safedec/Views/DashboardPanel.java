@@ -58,9 +58,9 @@ public class DashboardPanel extends javax.swing.JPanel {
             Object[]  tableRow = new Object[8];
             tableRow[0]= sensor.getId();
             tableRow[1]= sensor.getSectionId();
-            tableRow[1]= type;
-            tableRow[2]= sensor.getPrice();
-            tableRow[3]= sensor.getLoc().getX1()+","+sensor.getLoc().getY1();
+            tableRow[2]= type;
+            tableRow[3]= sensor.getPrice();
+            tableRow[4]= sensor.getLoc().getX1()+","+sensor.getLoc().getY1();
             
              sensorModel.addRow(tableRow);
         }

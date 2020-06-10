@@ -53,18 +53,18 @@ public class FlyweightSensorIconFactory {
         AudioClip alertClip = null;
 
         if( sensorInfo instanceof MotionSensor )
-        {       downIcon = getImageIcon("/safedec/res/FireAlarmDown.gif");
-                offIcon = getImageIcon("/safedec/res/FireAlarmOff.gif");
-                onIcon = getImageIcon("/safedec/res/FireAlarmOn.gif");
-                hotIcon = getImageIcon("/safedec/res/FireAlarmAlert.gif");
-                alertClip = getAudioClip("/safedec/res/FireAlarm.wav");
+        {       downIcon = getImageIcon("/FireAlarmDown.gif");
+                offIcon = getImageIcon("/FireAlarmOff.gif");
+                onIcon = getImageIcon("/FireAlarmOn.gif");
+                hotIcon = getImageIcon("/FireAlarmAlert.gif");
+                alertClip = getAudioClip("/FireAlarm.wav");
         }
         else {
-                downIcon = getImageIcon("/safedec/res/SecurityAlarmDown.gif");
-                offIcon = getImageIcon("/safedec/res/SecurityAlarmOff.gif");
-                onIcon = getImageIcon("/safedec/res/SecurityAlarmOn.gif");
-                hotIcon = getImageIcon("/safedec/res/SecurityAlarmAlert.gif");
-                alertClip = getAudioClip("/safedec/res/SecurityAlarm.wav");
+                downIcon = getImageIcon("/SecurityAlarmDown.gif");
+                offIcon = getImageIcon("/SecurityAlarmOff.gif");
+                onIcon = getImageIcon("/SecurityAlarmOn.gif");
+                hotIcon = getImageIcon("/SecurityAlarmAlert.gif");
+                alertClip = getAudioClip("/SecurityAlarm.wav");
         }
         
         

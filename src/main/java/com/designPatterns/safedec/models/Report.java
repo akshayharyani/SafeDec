@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.designPatterns.safedec;
+package com.designPatterns.safedec.models;
+
+import java.util.List;
 
 /**
  *
  * @author akshayharyani
  */
-public interface ReportInterface {
+public interface Report {
     
-    void generateReport();
-    
+    void save();
 }
