@@ -19,6 +19,7 @@ import com.designPatterns.safedec.models.Customer;
 import com.designPatterns.safedec.models.FireSensor;
 import com.designPatterns.safedec.models.Location;
 import com.designPatterns.safedec.models.MotionSensor;
+import com.designPatterns.safedec.models.Sensor;
 
 /**
  *
@@ -32,6 +33,7 @@ private static final String Y1              = "y1";
 private static final String SENSORID        = "sensorId";
 private static final String IPADDRESS       = "ipAddress";
 private static final String PORT            = "port";
+private static final String Type            = "sensorType";
 private static final String COST            = "cost";
 private static final String ISCAMERAENABLED = "iscameraEnabled";
 private static final String TYPE = "sensorType";
@@ -253,32 +255,48 @@ private static final String GET_SENSORS_BY_SECTION_ID = "select * from customer_
     }
 
     @Override
-    public List<MotionSensor> getAllSensors(Customer customer) {
+    public List<Sensor> getAllSensors(Customer customer) {
      ObjectPool pool =  ViewController.getInstance().getConnectionPool();
        Connection conn = (Connection)pool.getObject();
        ResultSet rs = null;
        PreparedStatement  stmt = null;
        boolean flag = false;
-       List< MotionSensor > sensors = new ArrayList< MotionSensor >();
+       List< Sensor > sensors = new ArrayList< Sensor >();
        try
         {
             stmt = conn.prepareStatement(GET_SENSORS_BY_CUSTOMER_ID);
             stmt.setInt(1, customer.getCustomerId());
             rs = stmt.executeQuery();
-            sensors = new ArrayList< MotionSensor >();
+            sensors = new ArrayList< Sensor >();
             while( rs.next() )
             {
-                MotionSensor sensor = new MotionSensor();
-                sensor.setSectionId( rs.getInt(SECTIONID) );  
-                sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
-                sensor.setPrice(0);
-                sensor.setId( rs.getInt(SENSORID) );
-                sensor.setIpAddress(rs.getString(IPADDRESS));
-                sensor.setIsCamera(rs.getBoolean(ISCAMERAENABLED));
-                sensor.setPrice(rs.getInt(COST));
-                sensor.setPortNumber(rs.getInt(PORT));
+                if(rs.getString(TYPE).equals("Fire")){
+                    FireSensor sensor  = new FireSensor();
+                    sensor.setSectionId( rs.getInt(SECTIONID) );  
+                    sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
+                    sensor.setPrice(0);
+                    sensor.setId( rs.getInt(SENSORID) );
+                    sensor.setIpAddress(rs.getString(IPADDRESS));
+                    sensor.setPrice(rs.getInt(COST));
+                    sensor.setPortNumber(rs.getInt(PORT));
+                    sensors.add( sensor );
+
+                }else{
+                    MotionSensor sensor = new MotionSensor();
+                    sensor.setSectionId( rs.getInt(SECTIONID) );  
+                    sensor.setLoc( new Location(rs.getInt(X1),rs.getInt(Y1) ) );
+                    sensor.setPrice(0);
+                    sensor.setId( rs.getInt(SENSORID) );
+                    sensor.setIpAddress(rs.getString(IPADDRESS));
+                    sensor.setIsCamera(rs.getBoolean(ISCAMERAENABLED));
+                    sensor.setPrice(rs.getInt(COST));
+                    sensor.setPortNumber(rs.getInt(PORT));
+                    sensors.add( sensor );
+
+                }
                 
-                sensors.add( sensor );
+       
+                
             }
             flag = true;
         }
