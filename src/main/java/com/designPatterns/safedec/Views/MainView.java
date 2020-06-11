@@ -46,9 +46,9 @@ public class MainView extends javax.swing.JFrame {
         billingMenuPanel = new javax.swing.JPanel();
         billingMenuLabel = new javax.swing.JLabel();
         accountsMenuPanel = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        scheduleMenuLabel = new javax.swing.JLabel();
         reportsMenuPanel = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        aboutMenuLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -173,9 +173,14 @@ public class MainView extends javax.swing.JFrame {
         accountsMenuPanel.setBackground(new java.awt.Color(0, 128, 145));
         accountsMenuPanel.setPreferredSize(new java.awt.Dimension(300, 40));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("ABOUT");
+        scheduleMenuLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        scheduleMenuLabel.setForeground(new java.awt.Color(255, 255, 255));
+        scheduleMenuLabel.setText("SCHEDULE");
+        scheduleMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scheduleMenuLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout accountsMenuPanelLayout = new javax.swing.GroupLayout(accountsMenuPanel);
         accountsMenuPanel.setLayout(accountsMenuPanelLayout);
@@ -183,11 +188,11 @@ public class MainView extends javax.swing.JFrame {
             accountsMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountsMenuPanelLayout.createSequentialGroup()
                 .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(scheduleMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         accountsMenuPanelLayout.setVerticalGroup(
             accountsMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(scheduleMenuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         jPanel5.add(accountsMenuPanel);
@@ -195,9 +200,14 @@ public class MainView extends javax.swing.JFrame {
         reportsMenuPanel.setBackground(new java.awt.Color(0, 128, 145));
         reportsMenuPanel.setPreferredSize(new java.awt.Dimension(300, 40));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("HELP");
+        aboutMenuLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        aboutMenuLabel.setForeground(new java.awt.Color(255, 255, 255));
+        aboutMenuLabel.setText("ABOUT");
+        aboutMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aboutMenuLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout reportsMenuPanelLayout = new javax.swing.GroupLayout(reportsMenuPanel);
         reportsMenuPanel.setLayout(reportsMenuPanelLayout);
@@ -205,11 +215,11 @@ public class MainView extends javax.swing.JFrame {
             reportsMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportsMenuPanelLayout.createSequentialGroup()
                 .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(aboutMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         reportsMenuPanelLayout.setVerticalGroup(
             reportsMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(aboutMenuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         jPanel5.add(reportsMenuPanel);
@@ -316,6 +326,24 @@ public class MainView extends javax.swing.JFrame {
         jPanel3.repaint();
     }//GEN-LAST:event_controlPanelMenuLabelMouseClicked
 
+    private void scheduleMenuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scheduleMenuLabelMouseClicked
+        // TODO add your handling code here:
+        JPanel schedulePanel = new SchedulePanel();
+        jPanel3.removeAll();
+        jPanel3.add(schedulePanel);
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }//GEN-LAST:event_scheduleMenuLabelMouseClicked
+
+    private void aboutMenuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuLabelMouseClicked
+        // TODO add your handling code here:
+        JPanel aboutPanel = new AboutPanel();
+        jPanel3.removeAll();
+        jPanel3.add(aboutPanel);
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }//GEN-LAST:event_aboutMenuLabelMouseClicked
+
 
 
     /**
@@ -354,14 +382,13 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel aboutMenuLabel;
     private javax.swing.JPanel accountsMenuPanel;
     private javax.swing.JLabel billingMenuLabel;
     private javax.swing.JPanel billingMenuPanel;
     private javax.swing.JLabel controlPanelMenuLabel;
     private javax.swing.JPanel dashboardMenuPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -370,5 +397,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel profileMenuLabel;
     private javax.swing.JPanel profileMenuPanel;
     private javax.swing.JPanel reportsMenuPanel;
+    private javax.swing.JLabel scheduleMenuLabel;
     // End of variables declaration//GEN-END:variables
   }

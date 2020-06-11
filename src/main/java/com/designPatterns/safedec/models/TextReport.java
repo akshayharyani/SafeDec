@@ -5,10 +5,12 @@
  */
 package com.designPatterns.safedec.models;
 
+import com.designPatterns.safedec.controls.ViewController;
 import java.util.List;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
@@ -44,6 +46,22 @@ public class TextReport implements Report {
         document = new Document(PageSize.A4);
         writer = PdfWriter.getInstance(document, new FileOutputStream("./bill.pdf"));
         document.open();
+        
+        PdfPTable customerTable = new PdfPTable(2);
+
+        customerTable.addCell("Customer Name ");    
+        customerTable.addCell(ViewController.getInstance().getLoggedInUser().getCustomerName());  
+        customerTable.addCell("Customer Id ");    
+        customerTable.addCell(String.valueOf(ViewController.getInstance().getLoggedInUser().getCustomerId()));  
+        customerTable.addCell("Address ");    
+        customerTable.addCell(ViewController.getInstance().getLoggedInUser().getPropertyAddress());  
+        customerTable.addCell("Phone ");    
+        customerTable.addCell(ViewController.getInstance().getLoggedInUser().getPhoneNumber()); 
+        customerTable.setSpacingAfter(10);
+
+
+        
+        
         PdfPTable pdfTable = new PdfPTable(4);
         pdfTable.setHeaderRows(1);
 
@@ -73,8 +91,13 @@ public class TextReport implements Report {
             pdfTable.addCell(String.valueOf(sensor.getPrice()));
 
         }
-  
-
+        Paragraph p1 = new Paragraph("Customer Details");
+        p1.setSpacingAfter(10);
+        document.add(p1); 
+        document.add(customerTable);
+        Paragraph p2 = new Paragraph("Sensors");
+        p2.setSpacingAfter(10);
+        document.add(p2); 
         document.add(pdfTable);
         document.close();
     }

@@ -13,10 +13,8 @@ import com.designPatterns.safedec.controls.ViewController;
  */
 public class InactiveSystemState implements SystemState{
   
-    BuildingSystem buildingSystem;
     
-    InactiveSystemState(BuildingSystem buildingSystem) {
-     this.buildingSystem = buildingSystem;
+    public InactiveSystemState() {
     }
 
     public void handleState() {
@@ -24,8 +22,9 @@ public class InactiveSystemState implements SystemState{
         //ViewController.getInstance().
     }
 
-    public void nextState() {
-      this.buildingSystem.state = new ActiveSystemState(buildingSystem);
+    @Override
+    public SystemState nextState() {
+      return new ActiveSystemState();
     }
 
   

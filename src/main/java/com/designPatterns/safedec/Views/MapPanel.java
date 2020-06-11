@@ -296,7 +296,6 @@ public class MapPanel extends javax.swing.JPanel {
         JLabel mapPicLabel = new javax.swing.JLabel(imageIcon);
         subMapPanel.add(mapPicLabel);
         Insets insets = subMapPanel.getInsets();
-        System.out.println( mapPicLabel.getIcon().getIconWidth() + " " + mapPicLabel.getIcon().getIconHeight());
         mapPicLabel.setBounds(insets.left, insets.top, mapPicLabel.getIcon().getIconWidth(), mapPicLabel.getIcon().getIconHeight());
         
         MapService service = new MapService();
@@ -353,8 +352,7 @@ public class MapPanel extends javax.swing.JPanel {
     private void updateTable( ) {
         javax.swing.table.DefaultTableModel sensorModel = (javax.swing.table.DefaultTableModel) sensorsTable.getModel();
         sensorModel.setRowCount(0);
-        for( Sensor sensor : allSensors )
-        {
+        for( Sensor sensor : allSensors ){
             Object[]  tableRow = new Object[8];
             tableRow[0]= sensor.getId();
             if( sensor instanceof MotionSensor )
@@ -362,8 +360,7 @@ public class MapPanel extends javax.swing.JPanel {
             else
                 tableRow[1] = "FireSensor";
             tableRow[2]= sensor.getLoc().getX1()+","+sensor.getLoc().getY1();
-            
-             sensorModel.addRow(tableRow);
+            sensorModel.addRow(tableRow);
         }
        
     }

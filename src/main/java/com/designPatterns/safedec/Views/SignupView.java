@@ -60,7 +60,7 @@ public class SignupView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SoSafe Signup");
+        setTitle("SafeDec Signup");
         setName("signupFrame"); // NOI18N
         setResizable(false);
 

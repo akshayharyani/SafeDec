@@ -11,5 +11,7 @@ package com.designPatterns.safedec.business;
  */
 public interface SystemState {
     public void handleState();
-    public void nextState();
+    public SystemState nextState();
 }
+
+

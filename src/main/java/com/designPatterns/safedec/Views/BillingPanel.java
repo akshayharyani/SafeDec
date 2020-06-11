@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,38 +71,7 @@ public class BillingPanel extends javax.swing.JPanel {
             billingModel.addRow(tableRow);
         }
     }
-    public void openPdf() throws FileNotFoundException, DocumentException {
-       
-    }
-
-    public void closePdf() {
-        document.close();
-    }
-
-    public void addData() throws DocumentException,  FileNotFoundException, DocumentException {
-        document = new Document(PageSize.A4);
-        writer = PdfWriter.getInstance(document, new FileOutputStream("./bill.pdf"));
-        document.open();
-        PdfPTable pdfTable = new PdfPTable(4);
-        pdfTable.setHeaderRows(1);
-
-        //adding table headers
-        for (int i = 0; i < billingTable.getColumnCount(); i++) {
-            pdfTable.addCell(billingTable.getColumnName(i));    
-        }
-        //extracting data from the JTable and inserting it to PdfPTable
-        for (int rows = 0; rows < billingTable.getRowCount(); rows++) {
-            for (int cols = 0; cols < billingTable.getColumnCount(); cols++) {
-                pdfTable.addCell(billingTable.getModel().getValueAt(rows, cols).toString());
-
-            }
-        }
-  
-
-        document.add(pdfTable);
-        document.close();
-    }
-    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,6 +155,7 @@ public class BillingPanel extends javax.swing.JPanel {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         billingService.createReport();
+        JOptionPane.showMessageDialog(null, "PDF file for bill generated.");
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

@@ -11,10 +11,9 @@ package com.designPatterns.safedec.business;
  */
 public class ActiveSystemState implements SystemState{
 
-    BuildingSystem buildingSystem;
 
-    public ActiveSystemState(BuildingSystem buildingSystem) {
-        this.buildingSystem = buildingSystem;
+    public ActiveSystemState() {
+        
     }
    
     @Override
@@ -24,8 +23,8 @@ public class ActiveSystemState implements SystemState{
     }
 
     @Override
-    public void nextState() {
-        this.buildingSystem.state = new ActiveSystemState(buildingSystem);
+    public SystemState nextState() {
+        return new ActiveSystemState();
     }
     
 }

@@ -1,5 +1,8 @@
 package com.designPatterns.safedec.Views;
 
+import com.designPatterns.safedec.business.ActiveSystemState;
+import com.designPatterns.safedec.business.BuildingSystem;
+import com.designPatterns.safedec.business.SystemState;
 import com.designPatterns.safedec.models.Sensor;
 import com.designPatterns.safedec.models.Alarm;
 import com.designPatterns.safedec.models.MotionSensor;
@@ -21,19 +24,16 @@ public class DashboardPanel extends javax.swing.JPanel {
     /**
      * Creates new form DashboardPanel
      */
+    private SystemState systemState;
+    private BuildingSystem buildingSystem;
+    private Boolean systemActive = true;
+    
     public DashboardPanel() {
         initComponents();
-//        javax.swing.table.DefaultTableModel sensorModel = (javax.swing.table.DefaultTableModel) SensorsTable.getModel();
-//        sensorModel.addRow(new Object[]{"1", "Fire Detector", "$10","02/02/2020","X,Y"});
-//        sensorModel.addRow(new Object[]{"2", "Motion Sensor(With Camera)", "$20","02/02/2020","X,Y"});
-//        sensorModel.addRow(new Object[]{"3", "Motion Sensor(Without Camera)", "18","02/02/2020","X,Y"});
-//        
-//        
-//
-//        javax.swing.table.DefaultTableModel alarmModel = (javax.swing.table.DefaultTableModel) AlarmTable.getModel();
-//        alarmModel.addRow(new Object[]{"1", "1","03/02/2020","Fire detector alarm"});
-           updateComponents();
-
+        updateComponents();
+        systemState = new ActiveSystemState();
+        buildingSystem = new BuildingSystem(systemState);
+        
     }
     
         private void updateComponents(){
@@ -91,7 +91,7 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         statusLabel = new javax.swing.JLabel();
         statusCodeLabel = new javax.swing.JLabel();
-        statusToggleButton2 = new javax.swing.JToggleButton();
+        statusToggleButton = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         SensorsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -103,10 +103,10 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         statusCodeLabel.setText("Active");
 
-        statusToggleButton2.setText("Deactivate");
-        statusToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        statusToggleButton.setText("Deactivate");
+        statusToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusToggleButton2ActionPerformed(evt);
+                statusToggleButtonActionPerformed(evt);
             }
         });
 
@@ -151,7 +151,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(statusCodeLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
-                                .addComponent(statusToggleButton2)))
+                                .addComponent(statusToggleButton)))
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +166,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(statusLabel)
                     .addComponent(statusCodeLabel)
-                    .addComponent(statusToggleButton2))
+                    .addComponent(statusToggleButton))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,9 +179,19 @@ public class DashboardPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void statusToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusToggleButton2ActionPerformed
+    private void statusToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusToggleButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_statusToggleButton2ActionPerformed
+        systemActive = !systemActive;
+        if(systemActive){
+            statusCodeLabel.setText("Active");
+            statusToggleButton.setText("Deactivate");
+            
+        }else{
+            statusCodeLabel.setText("Inactive");
+            statusToggleButton.setText("Activate");
+        }
+        buildingSystem.nextState();
+    }//GEN-LAST:event_statusToggleButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -193,6 +203,6 @@ public class DashboardPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel statusCodeLabel;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JToggleButton statusToggleButton2;
+    private javax.swing.JToggleButton statusToggleButton;
     // End of variables declaration//GEN-END:variables
 }
